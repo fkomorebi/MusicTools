@@ -1,9 +1,21 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
 			"path": "pages/tuner/index",
 			"style": {
 				"navigationBarTitleText": "调音器"
+			}
+		},
+		{
+			"path": "pages/scale/index",
+			"style":{
+				"navigationBarTitleText": "音阶模式图"
 			}
 		},
 		{
@@ -16,7 +28,7 @@
 	"tabBar": {
 		"list": [
 			{
-				"pagePath": "pages/tuner/index",
+				"pagePath": "pages/home/index",
 				"text": "调音器",
 				"iconPath": "static/img/home.png",
 				"selectedIconPath": "static/img/home-fill.png"

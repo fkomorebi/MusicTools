@@ -4,15 +4,11 @@
     <h2 class="sec-title">简介</h2>
     <br/>
     <p class="content-text">&nbsp;&nbsp;&nbsp;&nbsp;“MusicTools”想做到让热爱音乐的人有办法通过自学来学习音乐，创造音乐。
-      未来还有很远的道路要走，若是有什么更加新奇有趣的想法，可以通过下方的
-      <span style="text-decoration:line-through">联系客服按钮</span>
-      <span style="font-size: 0.3em">(客服功能还在开发中)</span>邮箱告知我们。
-      <br/>
-      <span class="email">邮箱：f.komorebi@qq.com</span>
+      未来还有很远的道路要走，若是有什么更加新奇有趣的想法，可以通过下方的<span style="font-weight: bold;">联系客服按钮</span>告知我们！
     </p>
   </div>
 
-  <!-- <button open-type="contact" class="contact-btn" type='primary'>联系客服</button> -->
+  <button open-type="contact" class="contact-btn" type='primary'>联系客服</button>
 </template>
 <style scoped>
 :root {
@@ -48,9 +44,5 @@
   bottom: 5px;
   margin-left: 50%;
   transform: translate(-50%, 0);
-}
-.email {
-  display: block;
-  margin-top: 50px;
 }
 </style>

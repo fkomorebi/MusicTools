@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onUnmounted, computed } from 'vue'
 import Tuner from "../../utils/tuner.note"
 const recorderConfig = reactive({
   sampleRate: 8000,
@@ -179,7 +178,7 @@ onUnmounted(() => {
 }
 .continue-btn {
   position:absolute;
-  bottom: 0;
+  bottom: 5px;
   margin-left: 50%;
   transform: translate(-50%,0);
 }
