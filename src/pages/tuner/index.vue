@@ -2,13 +2,14 @@
   <div class="meter">
     <div class="meter-dot"></div>
     <div class="meter-pointer" :style="'transform: rotate(' + delta + 'deg)'"></div>
-    <template v-for="n in standardInterval" :key="n + 'meter'">
-      <div v-if="n%5 === 0" 
-        class="meter-scale meter-scale-strong" 
-        :style="'transform: rotate(' + (n * 9 - 45) + 'deg)'"
+    <template v-for="(n, index) in standardInterval" :key="`${index}-meter`">
+      <div
+          v-if=" n%5 === 0"
+        class="meter-scale meter-scale-strong"
+        :style="`transform: rotate(${n * 9 - 45}deg)`"
         >
       </div>
-      <div v-else class="meter-scale" :style="'transform: rotate(' + (n * 9 - 45) + 'deg)'"></div>
+      <div v-else class="meter-scale" :style="`transform: rotate(${n * 9 - 45}deg)`"></div>
     </template>
     <span :class="noteStyle">{{ note }}</span>
     <span :class="tipsStyle">{{ tips }}</span>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup>
-import Tuner from "../../utils/tuner.note"
+import Tuner from "../../utils/tuner.note";
 const recorderConfig = reactive({
   sampleRate: 8000,
   numberOfChannels: 1,
@@ -35,7 +36,7 @@ const recorderConfig = reactive({
 const note = ref('')
 const delta = ref(0)
 const type = uni.getSystemInfoSync().uniPlatform
-const standardInterval = 9
+const standardInterval = Array.from({ length: 9}, (_, index)=>index+1)
 const tips = ref('')
 const tipsStyle = ref('')
 const isPauseRecord = ref(false)
@@ -61,31 +62,33 @@ function onResumeRecord() {
 }
 
 function onStartRecord() {
-  var n = new Tuner.Note();
+  const n = new Tuner.Note();
   let onFrameRecordedCallBack = res => {
-    if (res.frameBuffer.byteLength == 0) return
+    if (res.frameBuffer.byteLength === 0) return
     let arrayBuffer = new Int16Array(res.frameBuffer)
     let correlate = n.autoCorrelate(arrayBuffer, recorderConfig.sampleRate)
     n.from_frequency(correlate)
-    note.value = n.fullface()==NaN ? note.value : n.fullface()
+    note.value = isNaN(n.fullface()) ? note.value : n.fullface()
     delta.value = n.diff_cents(correlate)
   }
   if (type === 'web') {
 
-  }else { 
+  }else {
     let recorderManager = uni.getRecorderManager()
     recorderManager.onFrameRecorded(onFrameRecordedCallBack)
     recorderManager.onPause(()=>{isPauseRecord.value = true})
-    recorderManager.onStop((src)=>{onStartRecord()})
+    recorderManager.onStop((src)=>{console.log('stopped')})
     recorderManager.onError(e=>{console.log('录音错误', e)})
     recorderManager.start(recorderConfig)
   }
 }
 
 onMounted(() => {
+  console.log('onShow')
   onStartRecord()
 })
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  console.log('onHide')
   uni.getRecorderManager().stop();
 })
 </script>
